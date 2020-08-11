@@ -3,9 +3,9 @@ import numpy
 import math
 import re
 
-import graphing
-import tinv
-from debug import warning_msg, debug_msg
+from . import graphing
+from . import tinv
+from .debug import warning_msg, debug_msg
 
 confidence_alpha = 0.95
 
@@ -31,7 +31,7 @@ def calculate_CI(values):
 def calculate_mean(results, exp_name, column_name):
 	mean_table = {}
 	exp = results["experiments"][exp_name]
-	benchmarks = exp["benchmarks"].keys()
+	benchmarks = list(exp["benchmarks"].keys())
 
 	for bm_name in benchmarks:
 		if "runs" not in exp["benchmarks"][bm_name]:
@@ -50,7 +50,7 @@ def calculate_speedup(results, exp_a_name, exp_b_name, column_name):
 	speedup_table = {}
 	exp_a = results["experiments"][exp_a_name]
 	exp_b = results["experiments"][exp_b_name]
-	benchmarks = exp_a["benchmarks"].keys()
+	benchmarks = list(exp_a["benchmarks"].keys())
 
 	for bm_name in benchmarks:
 		if "runs" not in exp_a["benchmarks"][bm_name]:
@@ -84,7 +84,7 @@ def get_mean_with_CI(results, exp_name, column_name):
 	means = []
 	uppers = []
 
-	names = speedup_table.keys()
+	names = list(speedup_table.keys())
 	names.sort()
 
 	for name in names:
@@ -94,10 +94,10 @@ def get_mean_with_CI(results, exp_name, column_name):
 		uppers.append(u)
 
 	group_remover = re.compile(".* \+\+ (.*)\.x")
-	names = map(lambda name: group_remover.match(name).group(1), names)
+	names = [group_remover.match(name).group(1) for name in names]
 
 	errors = []
-	for i in xrange(0, len(means)):
+	for i in range(0, len(means)):
 		errors.append(means[i] - lowers[i])
 
 	return (names, means, errors)
@@ -109,7 +109,7 @@ def get_speedup_with_CI(results, exp_a_name, exp_b_name, column_name):
 	means = []
 	uppers = []
 
-	names = speedup_table.keys()
+	names = list(speedup_table.keys())
 	names.sort()
 
 	for name in names:
@@ -119,10 +119,10 @@ def get_speedup_with_CI(results, exp_a_name, exp_b_name, column_name):
 		uppers.append(u)
 
 	group_remover = re.compile(".* \+\+ (.*)\.x")
-	names = map(lambda name: group_remover.match(name).group(1), names)
+	names = [group_remover.match(name).group(1) for name in names]
 
 	errors = []
-	for i in xrange(0, len(means)):
+	for i in range(0, len(means)):
 		errors.append(means[i] - lowers[i])
 
 	return (names, means, errors)

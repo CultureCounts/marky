@@ -1,8 +1,8 @@
-import arcsimMemAnalyzer
+from . import arcsimMemAnalyzer
 import re
 import time
 
-import stats
+from . import stats
 
 root = "/disk/scratch/vseeker/workspace/arcsim/rep/arcsim_multicore/"
 

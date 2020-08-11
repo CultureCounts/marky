@@ -3,7 +3,7 @@ from email.mime.text import MIMEText
 from time import gmtime, strftime
 from socket import gethostname
 
-from debug import error_msg, warning_msg, debug_msg
+from .debug import error_msg, warning_msg, debug_msg
 
 # Just a function that sends the results to a given e-mail address.
 # This expects a mail server to be running on localhost by default!

@@ -2,10 +2,10 @@
 
 import os, subprocess, re, sys, string, json, argparse, datetime, time, signal, tempfile
 import types
-import stats, mailer, args, ecd
+from . import stats, mailer, args, ecd
 #import speedup
-from config import config
-from debug import debug_msg, error_msg, warning_msg
+from .config import config
+from .debug import debug_msg, error_msg, warning_msg
 
 # Codes used by the execute_and_capture_output methods.
 TIMEOUT_ERROR = 1
@@ -91,7 +91,7 @@ def convert_data(s):
 
 # For a run, converts all the data in it to the correct type.
 def cleanup_run(run):
-	for field in run.keys():
+	for field in list(run.keys()):
 		run[field] = convert_data(run[field])
 	return run
 
@@ -137,18 +137,18 @@ def load_raw_output(invocation, iteration):
 def convert_to_csv(results):
 	# TODO: work out how to produce the headings
 	s = '"experiment_name","benchmark","i",\n'
-	for (exp_name, exp) in results["experiments"].items():
-		for (bm_name, bm) in exp["benchmarks"].items():
+	for (exp_name, exp) in list(results["experiments"].items()):
+		for (bm_name, bm) in list(exp["benchmarks"].items()):
 			run_counter = 1
 			for run in bm["runs"]:
 				s += '"' + exp_name + '","' + bm_name + '",' + str(run_counter) + ',' 
-				s += ','.join(map(lambda v: str(v), run.values()))
+				s += ','.join([str(v) for v in list(run.values())])
 				s += "\n"
 				run_counter += 1
 			if "aggregates" in bm:
-				for (agg_name, agg) in bm["aggregates"].items():
+				for (agg_name, agg) in list(bm["aggregates"].items()):
 					s += '"' + exp_name + '","' + bm_name + '","**' + agg_name + '**",' 
-					s += ','.join(map(lambda v: str(v), agg.values()))
+					s += ','.join([str(v) for v in list(agg.values())])
 					s += "\n"
 
 	return s
@@ -217,7 +217,7 @@ def run(suite):
 	total_result_table["experiments"] = {}
 
 	# Go through the programs...
-	for (program_alias, program) in suite.programs.items():
+	for (program_alias, program) in list(suite.programs.items()):
 
 		# Check if there's argument variables that will require iterating over
 		if ((len(suite.argument_variables) + len(suite.file_argument_variables)) == 0):
@@ -262,7 +262,7 @@ def run_experiment(suite, program, program_alias, exp_name, experiment_arguments
 	# Convert the dict of benchmark groups, to a list of benchmark tuples called actual_benchmarks
 	# We will then iterate over that.
 	actual_benchmarks = []
-	for (group_name, group_benchmarks) in suite.benchmarks.items():
+	for (group_name, group_benchmarks) in list(suite.benchmarks.items()):
 		for (name, directory, executescript, timeout) in group_benchmarks:
 			actual_benchmarks.append((group_name, name, directory, executescript, timeout))
 
@@ -334,7 +334,7 @@ def run_experiment(suite, program, program_alias, exp_name, experiment_arguments
 					save_raw_output(raw_output_name, i, raw)
 
 				# Now collect the fields using our provided filters.
-				for (field, field_filter) in suite.filters.items():
+				for (field, field_filter) in list(suite.filters.items()):
 					run[field] = run_filter(raw, field_filter)
 
 				if not config["loadraw"]:
@@ -391,7 +391,7 @@ def run_experiment(suite, program, program_alias, exp_name, experiment_arguments
 	return experiment_table
 
 def print_results(results, formatter=json.dumps):
-	print(formatter(results))
+	print((formatter(results)))
 
 def save_results(filename, results, formatter=json.dumps):
 	f = open(filename, "w")

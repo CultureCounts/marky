@@ -31,9 +31,9 @@ def get_experiment_arguments(cmdarg_vars, filearg_vars):
 	# This container will contain both commandline argument variables and file argument variables.
 	real_arg_vars = {}
 
-	for (k, v) in cmdarg_vars.items():
+	for (k, v) in list(cmdarg_vars.items()):
 		real_arg_vars[k] = (v, False)
-	for (k, v) in filearg_vars.items():
+	for (k, v) in list(filearg_vars.items()):
 		real_arg_vars[k] = (v, True)
 
 	exp_args = build_experiment_arguments(exp_args, real_arg_vars)
