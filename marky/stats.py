@@ -48,7 +48,7 @@ def aggregate(fun, run_table, key_field = None):
 	# We DO simply want to aggregate all the fields.
 	else:
 		# Use the first run in the run table as example of the run's schema (i.e., fields)
-		for field in run_table[0].keys():
+		for field in list(run_table[0].keys()):
 			# For each field...
 			# ...construct the list of values in that field
 			values = []
@@ -75,7 +75,7 @@ def perform_experiment_aggregation(suite, experiment_table):
 		(aggregate_fun, key_field) = suite.benchmark_aggregates[aggregate_name]
 
 		# Go through the benchmarks executed in this experiment... 
-		for (name, benchmark) in experiment_table["benchmarks"].items():
+		for (name, benchmark) in list(experiment_table["benchmarks"].items()):
 			# Populating the run_table
 			if "aggregates" in benchmark:
 				run_table.append(benchmark["aggregates"][aggregate_name])
@@ -86,13 +86,13 @@ def perform_experiment_aggregation(suite, experiment_table):
 
 
 def perform_aggregation(suite, results):
-	for (exp_name, exp) in results["experiments"].items():
+	for (exp_name, exp) in list(results["experiments"].items()):
 		successes = 0
-		for (bm_name, bm) in exp["benchmarks"].items():
+		for (bm_name, bm) in list(exp["benchmarks"].items()):
 			if bm["successes"] > 0 and len(suite.benchmark_aggregates) > 0:
 				successes += 1
 				bm["aggregates"] = {}
-				for (field, (a, key_field)) in suite.benchmark_aggregates.items():
+				for (field, (a, key_field)) in list(suite.benchmark_aggregates.items()):
 					bm["aggregates"][field] = aggregate(a, bm["runs"], key_field)
 
 		if successes > 0 and len(suite.experiment_aggregates) > 0:

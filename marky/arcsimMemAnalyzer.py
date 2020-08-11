@@ -48,14 +48,14 @@ class MassifSnapshot:
 
 	# print data in this object
 	def printData(self):
-		print("timeDeltaMs:\t" +  self.timeDeltaMs)
-		print("timeDeltaS:\t" +  self.timeDeltaS)
-		print("heapUsefulB:\t" +  self.heapUsefulB, " B")
-		print("heapExtraB:\t" +  self.heapExtraB, " B")
-		print("heapTotalB:\t" +  self.heapTotalB, " B")
-		print("heapUsefulMB:\t" +  self.heapUsefulMB, " MB")
-		print("heapExtraMB:\t" +  self.heapExtraMB, " MB")
-		print("heapTotalMB:\t" +  self.heapTotalMB, " MB")
+		print(("timeDeltaMs:\t" +  self.timeDeltaMs))
+		print(("timeDeltaS:\t" +  self.timeDeltaS))
+		print(("heapUsefulB:\t" +  self.heapUsefulB, " B"))
+		print(("heapExtraB:\t" +  self.heapExtraB, " B"))
+		print(("heapTotalB:\t" +  self.heapTotalB, " B"))
+		print(("heapUsefulMB:\t" +  self.heapUsefulMB, " MB"))
+		print(("heapExtraMB:\t" +  self.heapExtraMB, " MB"))
+		print(("heapTotalMB:\t" +  self.heapTotalMB, " MB"))
 
 #------------------------------------------------------------------------------------------------------------#
 class ArcSimSnapshot:
@@ -85,11 +85,11 @@ class ArcSimSnapshot:
 		
 	# print data in this object
 	def printData(self):
-		print("timeStampNs:\t" +  self.timeStampNs)
-		print("timeStampMs:\t" +  self.timeStampMs)
-		print("timeDeltaS:\t" +  self.timeDeltaS)
-		print("internalMemB:\t" +  self.internalMemB, " B")
-		print("internalMemMB:\t" +  self.internalMemMB, " MB")
+		print(("timeStampNs:\t" +  self.timeStampNs))
+		print(("timeStampMs:\t" +  self.timeStampMs))
+		print(("timeDeltaS:\t" +  self.timeDeltaS))
+		print(("internalMemB:\t" +  self.internalMemB, " B"))
+		print(("internalMemMB:\t" +  self.internalMemMB, " MB"))
 
 ################## FUNCTION Section #########################################################################
 

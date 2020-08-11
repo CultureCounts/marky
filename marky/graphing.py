@@ -52,13 +52,13 @@ def add_plot(graph, names, values, errors):
 	offset = transforms.ScaledTranslation(offset_points/72.0, 0, fig.dpi_scale_trans)
 	offset_transform = ax.transData + offset
 
-	(plot, bar1, bar2) = ax.errorbar(xrange(0,len(values)), values, yerr=errors, marker="D", markersize=2.5, linestyle=" ", color=color, transform=offset_transform, markeredgecolor=color, elinewidth=0.8)
+	(plot, bar1, bar2) = ax.errorbar(range(0,len(values)), values, yerr=errors, marker="D", markersize=2.5, linestyle=" ", color=color, transform=offset_transform, markeredgecolor=color, elinewidth=0.8)
 
 	graph.plots.append(plot)
 
 	graph.change_color()
 
-	for i in xrange(0, len(values)):
+	for i in range(0, len(values)):
 		high_point = values[i] + errors[i]
 		if high_point > graph.high_yaxis:
 			graph.high_yaxis = high_point
@@ -67,8 +67,8 @@ def add_plot(graph, names, values, errors):
 
 	width = 0.15
 
-	ind = range(0, len(values))
-	plt.xticks(map(lambda n: n + width/2.0, ind), names, fontsize=8, rotation=300)
+	ind = list(range(0, len(values)))
+	plt.xticks([n + width/2.0 for n in ind], names, fontsize=8, rotation=300)
 	plt.yticks(fontsize=8)
 
 	graph.offset_points += 4

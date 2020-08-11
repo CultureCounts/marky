@@ -1,6 +1,6 @@
 import re
 
-import stats
+from . import stats
 
 root = "/Users/sck/Code/working-arcsim-multicore/"
 
